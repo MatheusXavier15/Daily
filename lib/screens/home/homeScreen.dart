@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
-import 'package:daily/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import 'widgets/day-marks.dart';
 import 'widgets/list-item.dart';
 
@@ -28,27 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
     "Pedro",
     "João"
   ];
-  double scrollableSize = 180;
+  int extentArrow = 63263;
+  double scrollableSize = 150;
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
     return Stack(
       children: [
         NotificationListener<DraggableScrollableNotification>(
           onNotification: (notification) {
             setState(() {
               if (notification.extent == 0.5) {
-                scrollableSize = 180;
+                scrollableSize = 150;
               } else {
                 scrollableSize = 500 * notification.extent;
               }
+              extentArrow = notification.extent > 0.6 ? 63264 : 63263;
             });
             return true;
           },
           child: DraggableScrollableSheet(
-            initialChildSize: 0.5,
+            initialChildSize: 0.55,
             maxChildSize: 0.8,
-            minChildSize: 0.5,
+            minChildSize: 0.55,
             builder: (context, scrollController) {
               return Container(
                 decoration: BoxDecoration(
@@ -65,13 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Column(
-                      children: const [
+                      children: [
                         Icon(
-                          Icons.expand_less_outlined,
+                          IconData(extentArrow, fontFamily: 'MaterialIcons'),
                           color: selectedBottomIcon,
                           size: 40,
                         ),
-                        Text(
+                        const Text(
                           "Today",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
