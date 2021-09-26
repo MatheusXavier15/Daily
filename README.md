@@ -1,6 +1,8 @@
-# daily
+# Daily
 
-A new Flutter project.
+## Flutter Version
+
+Esse projeto foi baseado na versão 2.5.0 do flutter. Veja mais em: [Flutter](https://flutter.dev/docs/development/tools/sdk/release-notes/release-notes-2.5.0)
 
 ## Getting Started
 
