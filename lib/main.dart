@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
-import 'screens/home/homeScreen.dart';
+import 'screens/home/HomeScreen.dart';
 
 void main() {
   runApp(const Daily());

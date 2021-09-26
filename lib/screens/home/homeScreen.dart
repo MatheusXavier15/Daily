@@ -1,11 +1,19 @@
 // ignore_for_file: file_names
-
 import 'package:daily/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+import 'widgets/day-marks.dart';
+import 'widgets/list-item.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<String> listItens = [
     "Ana",
     "Matheus",
@@ -20,146 +28,81 @@ class HomeScreen extends StatelessWidget {
     "Pedro",
     "João"
   ];
+  double scrollableSize = 180;
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     return Stack(
       children: [
-        DraggableScrollableSheet(
-          initialChildSize: 0.5,
-          maxChildSize: 0.8,
-          minChildSize: 0.5,
-          builder: (context, scrollController) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                boxShadow: const [
-                  BoxShadow(
-                      color: Colors.black87,
-                      spreadRadius: 1,
-                      blurRadius: 4,
-                      offset: Offset(0, 3))
-                ],
-              ),
-              child: Column(
-                children: [
-                  Column(
-                    children: const [
-                      Icon(
-                        Icons.expand_less_outlined,
-                        color: selectedBottomIcon,
-                        size: 40,
-                      ),
-                      Text(
-                        "Today",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: selectedBottomIcon,
-                          fontSize: 25,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+        NotificationListener<DraggableScrollableNotification>(
+          onNotification: (notification) {
+            setState(() {
+              if (notification.extent == 0.5) {
+                scrollableSize = 180;
+              } else {
+                scrollableSize = 500 * notification.extent;
+              }
+            });
+            return true;
+          },
+          child: DraggableScrollableSheet(
+            initialChildSize: 0.5,
+            maxChildSize: 0.8,
+            minChildSize: 0.5,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black87,
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: Offset(0, 3))
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Column(
                       children: const [
-                        Text(
-                          "Manhã",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: deleteTile,
-                            fontSize: 20,
-                          ),
+                        Icon(
+                          Icons.expand_less_outlined,
+                          color: selectedBottomIcon,
+                          size: 40,
                         ),
                         Text(
-                          "Tarde",
+                          "Today",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: deleteTile,
-                            fontSize: 20,
-                          ),
-                        ),
-                        Text(
-                          "Noite",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: deleteTile,
-                            fontSize: 20,
+                            color: selectedBottomIcon,
+                            fontSize: 25,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: listItens.length,
-                      itemBuilder: (context, index) {
-                        final item = listItens[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Dismissible(
-                              background: Container(
-                                decoration: const BoxDecoration(
-                                    color: selectedBottomIcon),
-                                width: screenSize.width * 0.9,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.done_outlined,
-                                    size: 30,
-                                    color: deleteTile,
-                                  ),
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              secondaryBackground: Container(
-                                decoration:
-                                    const BoxDecoration(color: deleteTile),
-                                width: screenSize.width * 0.9,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.delete_outline_outlined,
-                                    size: 30,
-                                    color: selectedBottomIcon,
-                                  ),
-                                ),
-                                alignment: Alignment.centerRight,
-                              ),
-                              onDismissed: (direction) {},
-                              key: Key(item),
-                              child: Container(
-                                decoration:
-                                    const BoxDecoration(color: listColor),
-                                width: screenSize.width * 1,
-                                height: 50,
-                                child: ListTile(
-                                  title: Text(
-                                    listItens[index],
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+                    const DayMarks(),
+                    LayoutBuilder(builder: (context, constraints) {
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 10),
+                        width: 300,
+                        height: scrollableSize,
+                        child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            ListItem(
+                              listItens: listItens,
+                              scrollController: scrollController,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
         Container(),
       ],
