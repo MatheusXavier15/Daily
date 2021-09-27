@@ -1,6 +1,7 @@
 import 'package:Daily/screens/Library/library.dart';
 import 'package:Daily/screens/charts/charts.dart';
 import 'package:Daily/screens/notifications/notifications.dart';
+import 'package:Daily/screens/welcome/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -30,7 +31,7 @@ class Daily extends StatelessWidget {
           scaffoldBackgroundColor: containerBackground,
           textTheme: Theme.of(context).textTheme.apply(displayColor: listColor),
         ),
-        home: const Pages(),
+        home: const WelcomeScreen(),
       ),
     );
   }
@@ -59,6 +60,7 @@ class _PagesState extends State<Pages> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           toolbarHeight: 100,
           backgroundColor: Colors.transparent,
           elevation: 0,
