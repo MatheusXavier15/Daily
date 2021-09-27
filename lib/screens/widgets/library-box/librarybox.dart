@@ -14,7 +14,7 @@ class _LibraryBoxState extends State<LibraryBox> {
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: 330,
+        width: 300,
         child: GridView.count(
           crossAxisSpacing: 40,
           crossAxisCount: 2,

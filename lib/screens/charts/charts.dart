@@ -3,6 +3,8 @@ import 'package:Daily/screens/charts/widgets/chartPie/charPie.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 class Charts extends StatelessWidget {
   Charts({Key? key}) : super(key: key);
   final List<TasksPerDay> dataBar = [
@@ -42,7 +44,32 @@ class Charts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: [GaugeChart(data: dataGauge), TasksPerDayChart(data: dataBar)],
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                "Estatísticas",
+                style: TextStyle(
+                    color: bottomBarBackground,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                width: 90,
+                child: Divider(
+                  color: bottomBarBackground,
+                  thickness: 1,
+                ),
+              )
+            ],
+          ),
+        ),
+        GaugeChart(data: dataGauge),
+        TasksPerDayChart(data: dataBar)
+      ],
     );
   }
 }

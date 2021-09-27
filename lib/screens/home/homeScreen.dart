@@ -38,12 +38,41 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   int extentArrow = 63263;
   double scrollableSize = 150;
+  bool dragExpanded = false;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        LibraryBox(
-          boxes: boxes,
+        SizedBox(
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                dragExpanded ? "Segunda-Feira" : "Bem-Vindo",
+                style: TextStyle(
+                    color: dragExpanded ? deleteTile : highText,
+                    fontSize: dragExpanded ? 25 : 20,
+                    fontWeight: FontWeight.w700),
+              ),
+              dragExpanded
+                  ? Text(
+                      "05/08/2021",
+                      style: TextStyle(color: selectedBottomIcon, fontSize: 18),
+                    )
+                  : Column(
+                      children: [
+                        Text("Seg",
+                            style: TextStyle(
+                                color: selectedBottomIcon, fontSize: 18)),
+                        Text("05/08",
+                            style: TextStyle(color: selectedBottomIcon))
+                      ],
+                    ),
+              SizedBox(
+                  width: 300, height: 300, child: LibraryBox(boxes: boxes)),
+            ],
+          ),
         ),
         NotificationListener<DraggableScrollableNotification>(
           onNotification: (notification) {
@@ -54,13 +83,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollableSize = 500 * notification.extent;
               }
               extentArrow = notification.extent > 0.6 ? 63264 : 63263;
+              dragExpanded = notification.extent > 0.6 ? true : false;
             });
             return true;
           },
           child: DraggableScrollableSheet(
-            initialChildSize: 0.55,
-            maxChildSize: 0.8,
-            minChildSize: 0.55,
+            initialChildSize: 0.52,
+            maxChildSize: 0.9,
+            minChildSize: 0.52,
             builder: (context, scrollController) {
               return Container(
                 decoration: BoxDecoration(
