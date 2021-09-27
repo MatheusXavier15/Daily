@@ -45,14 +45,14 @@ class _PagesState extends State<Pages> {
   final tabs = [
     HomeScreen(),
     Container(
-      child: Center(child: Text("Pedro putinha")),
+      child: Center(child: Text("Library")),
     ),
     Container(),
     Container(
-      child: Center(child: Text("Ana putinha")),
+      child: Center(child: Text("Grafics")),
     ),
     Container(
-      child: Center(child: Text("Maicon putinha")),
+      child: Center(child: Text("Notifications")),
     )
   ];
   int _selectedIndex = 0;
@@ -71,7 +71,7 @@ class _PagesState extends State<Pages> {
               child: SearchBar()),
           actions: const [
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(right: 25.0),
               child: Icon(
                 Icons.account_circle_rounded,
                 color: selectedBottomIcon,

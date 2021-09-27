@@ -1,4 +1,5 @@
 // ignore_for_file: file_names
+import 'package:Daily/screens/home/widgets/library-box/librarybox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,10 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        const LibraryBox(),
         NotificationListener<DraggableScrollableNotification>(
           onNotification: (notification) {
             setState(() {
-              if (notification.extent == 0.5) {
+              if (notification.extent < 0.7) {
                 scrollableSize = 150;
               } else {
                 scrollableSize = 500 * notification.extent;
