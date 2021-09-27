@@ -1,11 +1,12 @@
 // ignore_for_file: file_names
-import 'package:Daily/screens/home/widgets/library-box/librarybox.dart';
+import 'package:Daily/screens/widgets/library-box/box.dart';
+import 'package:Daily/screens/widgets/library-box/librarybox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';
-import 'widgets/day-marks.dart';
-import 'widgets/list-item.dart';
+import 'widgets/daymarks.dart';
+import 'widgets/listItem.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,13 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
     "Pedro",
     "João"
   ];
+  List<Box> boxes = const [
+    Box(icon: 61487, color: Colors.blue, text: 'Agendados'),
+    Box(icon: 62026, color: Colors.red, text: 'Importantes'),
+    Box(icon: 61791, color: Colors.grey, text: 'Arquivados'),
+    Box(icon: 62428, color: Colors.amber, text: 'Favoritos'),
+  ];
   int extentArrow = 63263;
   double scrollableSize = 150;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const LibraryBox(),
+        LibraryBox(
+          boxes: boxes,
+        ),
         NotificationListener<DraggableScrollableNotification>(
           onNotification: (notification) {
             setState(() {
@@ -65,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         offset: Offset(0, 3))
                   ],
                 ),
-                child: Column(
+                child: ListView(
                   children: [
                     Column(
                       children: [
@@ -93,9 +102,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Flex(
                           direction: Axis.vertical,
                           children: [
-                            ListItem(
-                              listItens: listItens,
-                              scrollController: scrollController,
+                            Expanded(
+                              child: ListItem(
+                                listItens: listItens,
+                                scrollController: scrollController,
+                              ),
                             )
                           ],
                         ),

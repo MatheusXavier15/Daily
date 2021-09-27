@@ -1,3 +1,4 @@
+import 'package:Daily/screens/Library/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -44,9 +45,7 @@ class _PagesState extends State<Pages> {
   final List<int> icone = [61703, 61790, 0, 61077, 62007];
   final tabs = [
     HomeScreen(),
-    Container(
-      child: Center(child: Text("Library")),
-    ),
+    Library(),
     Container(),
     Container(
       child: Center(child: Text("Grafics")),
