@@ -1,5 +1,6 @@
 import 'package:Daily/screens/Library/library.dart';
 import 'package:Daily/screens/charts/charts.dart';
+import 'package:Daily/screens/notifications/notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -49,9 +50,7 @@ class _PagesState extends State<Pages> {
     Library(),
     Container(),
     Charts(),
-    Container(
-      child: Center(child: Text("Notifications")),
-    )
+    Notifications()
   ];
   int _selectedIndex = 0;
   @override

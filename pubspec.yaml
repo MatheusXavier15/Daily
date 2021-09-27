@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  flutter_svg: ^0.22.0
   charts_flutter:
     git:
       url: git://github.com/google/charts.git
@@ -22,3 +23,5 @@ dev_dependencies:
   flutter_lints: ^1.0.0
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
