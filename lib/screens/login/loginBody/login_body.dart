@@ -3,12 +3,28 @@ import 'package:Daily/screens/widgets/button.dart';
 import 'package:Daily/screens/widgets/inputfield.dart';
 import 'package:Daily/screens/widgets/socialIcon/social_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:Daily/constants.dart';
 import '../../../constants.dart';
 import 'background.dart';
 
-class LoginBody extends StatelessWidget {
+class LoginBody extends StatefulWidget {
   const LoginBody({Key? key}) : super(key: key);
+
+  @override
+  _LoginBodyState createState() => _LoginBodyState();
+}
+
+class _LoginBodyState extends State<LoginBody> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  void initState() {
+    super.initState();
+    emailController.text = "";
+    passwordController.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +52,21 @@ class LoginBody extends StatelessWidget {
                 hintText: "Seu Email",
                 icon: Icons.email_outlined,
                 iconColor: Colors.lightBlue,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    emailController.text = value;
+                  });
+                },
               ),
               RoundedInputField(
                 hintText: "Sua Senha",
                 icon: Icons.lock,
                 iconColor: Colors.lightBlue,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  setState(() {
+                    passwordController.text = value;
+                  });
+                },
                 inputPassword: true,
               ),
               const SizedBox(
@@ -52,7 +76,16 @@ class LoginBody extends StatelessWidget {
                 buttonText: 'Entrar',
                 buttonColor: Colors.lightBlue.shade800,
                 buttonSize: screensize.width * 0.3,
-                press: () {
+                press: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+
+                  await prefs.setBool('logged', true);
+                  await prefs.setString('email', emailController.text);
+                  await prefs.setString('password', passwordController.text);
+                  // print(emailController.text);
+                  // print(passwordController.text);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

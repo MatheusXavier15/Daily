@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'screens/home/HomeScreen.dart';
 import 'screens/widgets/searchbar.dart';
+import 'services/db_sqlite.dart';
 
 void main() {
+  createDatabase();
   runApp(const Daily());
 }
 
@@ -54,6 +56,7 @@ class _PagesState extends State<Pages> {
     Notifications()
   ];
   int _selectedIndex = 0;
+  int _counter = 0;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -82,7 +85,17 @@ class _PagesState extends State<Pages> {
         extendBody: true,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            print('pressed');
+            setState(() {
+              _counter++;
+            });
+            insertTaskPerDay(TaskPerDay(
+              id: _counter,
+              day: '15',
+              description: 'Outra tarefa de teste',
+            ));
+          },
           tooltip: 'Increment',
           child: const Icon(
             Icons.add,

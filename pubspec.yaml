@@ -16,6 +16,8 @@ dependencies:
     git:
       url: git://github.com/google/charts.git
       path: charts_flutter
+  shared_preferences: ^2.0.7
+  sqflite: ^2.0.0+4
 
 dev_dependencies:
   flutter_test:
