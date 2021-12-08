@@ -122,7 +122,32 @@ class _LoginBodyState extends State<LoginBody> {
                     press: () {},
                   ),
                 ],
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0, bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Não possui uma conta? Então",
+                      style: TextStyle(
+                          color: selectedBottomIcon,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    InkWell(
+                      child: const Text(
+                        " cadastre-se",
+                        style: TextStyle(
+                            color: deleteTile,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700),
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
